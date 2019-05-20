@@ -104,12 +104,12 @@ def getData_feat2(train_type):
 def getData_feat3(train_type):
     if train_type == 'cv':
         X_train = np.load(args.tmp_data_path+'/tmp_train_feat3_withlen.npy')
-        Y_train = np.load(args.train_data_path+'train2/train_arr_label.npy')
-        test_df = pd.read_hdf(args.train_data_path+'train/train_origin_final.h5')
+        Y_train = np.load(args.train_data_path+'/train_arr_label.npy')
+        test_df = pd.read_hdf(args.train_data_path+'/train_origin_final.h5')
         return X_train, Y_train, test_df
     elif train_type == 'val':
         X_train = np.load(args.tmp_data_path+'/tmp_train_feat3_withlen.npy')
-        Y_train = np.load(args.train_data_path+'train2/ætrain_arr_label.npy')
+        Y_train = np.load(args.train_data_path+'/train_arr_label.npy')
         test_df = pd.read_hdf(args.train_data_path+'/train_origin_final.h5')
         # pepare for dataset
         i = test_df.loc[test_df.日期 == 319].index
