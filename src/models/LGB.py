@@ -1,10 +1,10 @@
 import lightgbm as lgb
 
 
-def createLGB(max_depth=3, learning_rate=1, n_estimators=6000, reg_alpha=0, reg_lambda=0):
+def createLGB(max_depth=3, learning_rate=0.1, n_estimators=5000, reg_alpha=0, reg_lambda=5):
     model = lgb.LGBMRegressor(max_depth=max_depth,
                               learning_rate=learning_rate,
-                              #                               num_leaves=29,
+                              #                               num_leaves=64,
                               n_estimators=n_estimators,
                               subsample=0.8,
                               colsample_bytree=0.7,
@@ -17,10 +17,11 @@ def createLGB(max_depth=3, learning_rate=1, n_estimators=6000, reg_alpha=0, reg_
                               #                               min_split_gain=0,
                               #                               max_bin=425,
                               #                               subsample_freq=1,
-                              seed=1024,
+                              seed=2019,
                               boosting_type='gbdt',
                               #                               boosting_type='dart',
                               objective='regression',
-                              nthread=48, silent=True)
+                              nthread=32, silent=True)
+    #     model.set_params(**{'objective': custom_sample_train}, metrics = ["mse", 'mae'])
 
     return model

@@ -1,6 +1,6 @@
 import os
 import numpy as np
-
+import pandas as pd
 
 from src.feat.ad_data_getter import getAdData
 from src.feat.user_data_getter import getUserData
@@ -63,3 +63,70 @@ def getFinalData(train_type):
         return X_train, Y_train, X_test, test_df
     else:
         raise Exception('Error while loading data')
+
+
+def getData_feat2(train_type):
+    if train_type == 'cv':
+        X_train = pd.read_hdf('tmp/tmp_train_feat2_ad.h5').values
+        X_train = np.delete(X_train, 7, axis=1)
+        Y_train = np.load('train2/train_arr_label.npy')
+        test_df = pd.read_hdf('train/train_origin_final.h5')
+        return X_train, Y_train, test_df
+    elif train_type == 'val':
+        X_train = pd.read_hdf('tmp/tmp_train_feat2_ad.h5').values
+        X_train = np.delete(X_train, 7, axis=1)
+        Y_train = np.load('train2/train_arr_label.npy')
+        test_df = pd.read_hdf('train/train_origin_final.h5')
+        # pepare for dataset
+        i = test_df.loc[test_df.日期 == 319].index
+        m = test_df.loc[test_df.日期 != 319].index
+        ### train dataset
+        X_tri_data = X_train[m]
+        Y_tri_label = Y_train[m]
+        ### test dataset
+        X_val_data = X_train[i]
+        Y_val_label = Y_train[i]
+        return X_tri_data, Y_tri_label, X_val_data, Y_val_label, test_df
+    elif train_type == 'test':
+        X_train = pd.read_hdf('tmp/tmp_train_feat2_ad.h5').values
+        X_train = np.delete(X_train, 7, axis=1)
+        Y_train = np.load('train2/train_arr_label.npy')
+        test_df = pd.read_hdf('test2/test_origin_final.h5')
+
+        X_test = pd.read_hdf('tmp/tmp_test_feat2_ad.h5').values
+
+        return X_train, Y_train, X_test, test_df
+    else:
+        raise Exception('No such train type')
+
+
+def getData_feat3(train_type):
+    if train_type == 'cv':
+        X_train = np.load('tmp/tmp_train_feat3_withlen.npy')
+        Y_train = np.load('train2/train_arr_label.npy')
+        test_df = pd.read_hdf('train/train_origin_final.h5')
+        return X_train, Y_train, test_df
+    elif train_type == 'val':
+        X_train = np.load('tmp/tmp_train_feat3_withlen.npy')
+        Y_train = np.load('train2/train_arr_label.npy')
+        test_df = pd.read_hdf('train/train_origin_final.h5')
+        # pepare for dataset
+        i = test_df.loc[test_df.日期 == 319].index
+        m = test_df.loc[test_df.日期 != 319].index
+        ### train dataset
+        X_tri_data = X_train[m]
+        Y_tri_label = Y_train[m]
+        ### test dataset
+        X_val_data = X_train[i]
+        Y_val_label = Y_train[i]
+        return X_tri_data, Y_tri_label, X_val_data, Y_val_label, test_df
+    elif train_type == 'test':
+        X_train = np.load('tmp/tmp_train_feat3_withlen.npy')
+        Y_train = np.load('train2/train_arr_label.npy')
+        test_df = pd.read_hdf('test2/test_origin_final.h5')
+
+        X_test = np.load('tmp/tmp_test_feat3_withlen.npy')
+
+        return X_train, Y_train, X_test, test_df
+    else:
+        raise Exception('No such train type')
