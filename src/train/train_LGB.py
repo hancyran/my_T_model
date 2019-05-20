@@ -22,6 +22,9 @@ from src.utils.misc_util import checkPos
 # val : test with validation set()
 # test: predict with original test set
 # cv: use cross validation for model testing
+from src.utils.submission_creator import create_submit
+
+
 def trainLGB(train_type='cv',
              max_depth=5, learning_rate=0.1, n_estimators=5000):
     # read data
@@ -165,13 +168,7 @@ def trainLGB(train_type='cv',
         ######### end testing dataset #############
 
         ############### export preds as csv ###################
-        out_predict_result = np.around(final_preds, decimals=4)
-
-        predict = pd.DataFrame(out_predict_result).reset_index()
-        predict['index'] = predict['index'].apply(lambda x: x + 1)
-
-        predict.to_csv(getResultPath(), header=0, index=0)
-        predict.to_csv('submission.csv', header=0, index=0)
+        create_submit(final_preds)
 
     ############# plot if needed ######################
     #     LGBplot(plot_importance, plot_metric)

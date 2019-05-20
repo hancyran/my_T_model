@@ -4,7 +4,7 @@ import pandas as pd
 
 from src.feat.ad_data_getter import getAdData
 from src.feat.user_data_getter import getUserData
-from src.utils.args import args
+from src.utils.path_args import args
 
 
 def getData(train_type):

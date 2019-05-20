@@ -8,14 +8,16 @@ import time
 # @Author: hancyran
 # @Date: 2019-05-17 19:02
 ###########
+from src.utils.path_args import args
+
 
 def getModelPath(model):
     date = time.strftime('%m-%d %H:%M', time.localtime(time.time() + 3600 * 8))
-    model_path = "model/" + model + " " + date + ".model"
+    model_path = args.lgb_model_path + model + " " + date + ".model"
     return model_path
 
 
 def getResultPath():
     date = time.strftime('%m-%d %H:%M', time.localtime(time.time() + 3600 * 8))
-    model_path = "result/" + date + ".result"
+    model_path = args.result_path + date + ".csv"
     return model_path

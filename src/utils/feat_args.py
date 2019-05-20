@@ -1,13 +1,4 @@
 class args:
-    root_path = '/jet/workspace/2019Tencent'
-
-    log_path = root_path+ '/log'
-    # data_path = '/data'
-    train_data_path = root_path+  '/train2'
-    test_data_path = root_path+'/test2'
-    combine_feat_data_path = root_path+'/combine'
-    tmp_data_path = root_path+'/tmp'
-
     feat2_list = ['广告id', '日期', '曝光广告素材尺寸', '广告行业id', '商品类型', '商品id', '广告账户id',
                   '创建日期', '创建星期', '投放时段']
 
@@ -26,5 +17,3 @@ class args:
     user_feat_en_dict = {'年龄': 'user_age', '性别': 'user_gender', '地域': 'user_area', '婚恋状况': 'user_status',
                          '工作状态': 'user_work', '行为兴趣': 'user_behavior', '设备': 'user_device',
                          '连接类型': 'user_connectionType', '学历': 'user_education', '消费能力': 'user_consuptionAbility'}
-
-
