@@ -96,7 +96,7 @@ def read_batch_data_from_csv(path, col_names, beg = 0, end = 7000000):
     for col_name in col_names:
         num += 1
         t = read_data_from_csv(path+col_name+'.csv', beg, end)
-        print num, col_name, t.shape
+        print(num, col_name, t.shape)
         data_arr.append(t)
     return np.concatenate(data_arr,axis=1)
 

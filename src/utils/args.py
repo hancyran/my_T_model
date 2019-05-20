@@ -1,11 +1,12 @@
 class args:
     root_path = '/jet/workspace/2019Tencent'
 
-    log_path = '/log/'
-    data_path = '/data'
-    train_data_path = data_path + '/train2'
-    test_data_path = data_path + '/test2'
-    combine_feat_data_path = data_path + '/combine'
+    log_path = root_path+ '/log'
+    # data_path = '/data'
+    train_data_path = root_path+  '/train2'
+    test_data_path = root_path+'/test2'
+    combine_feat_data_path = root_path+'/combine'
+    tmp_data_path = root_path+'/tmp'
 
     feat2_list = ['广告id', '日期', '曝光广告素材尺寸', '广告行业id', '商品类型', '商品id', '广告账户id',
                   '创建日期', '创建星期', '投放时段']
