@@ -1,17 +1,14 @@
-import os
+import sys
 
 from src.train.train_LGB import trainLGB
-from src.utils.LGB_args import args
 
-n_estimator_list = args.n_estimators
-# rate= args.learning_rate
-
-for i, n in enumerate(n_estimator_list):
-    print('CV Tuning %d\n' % i)
-    trainLGB('cv', n_estimators=n)
-
-for i, n in enumerate(n_estimator_list):
-    print('Val Tuning %d\n' % i)
-    trainLGB('val', n_estimators=n)
-
-print('All Finished')
+train_type = sys.argv[1]
+try:
+    learning_rate = int(sys.argv[2])
+    if train_type == 'cv':
+        trainLGB('cv', learning_rate=learning_rate)
+    elif train_type == 'val':
+        trainLGB('val', learning_rate=learning_rate)
+except:
+    if train_type == 'test':
+        trainLGB('test')

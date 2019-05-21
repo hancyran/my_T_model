@@ -1,6 +1,5 @@
 import time
 
-
 ###########
 # @Description: 文件路径保存工具
 # @Param:
@@ -19,5 +18,11 @@ def getModelPath(model):
 
 def getResultPath():
     date = time.strftime('%m-%d %H:%M', time.localtime(time.time() + 3600 * 8))
-    model_path = args.result_path + "/" + date + ".csv"
-    return model_path
+    result_path = args.result_path + "/" + date + ".csv"
+    return result_path
+
+
+def getLogPath(train_type):
+    date = time.strftime('%m-%d %H:%M', time.localtime(time.time() + 3600 * 8))
+    log_path = args.log_path + "/" + train_type + "-" + date + ".txt"
+    return log_path

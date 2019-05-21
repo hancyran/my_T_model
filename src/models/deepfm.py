@@ -18,7 +18,7 @@ from src.utils.utils import check_feature_config_dict, concat_fun
 
 def DeepFM(feature_dim_dict, embedding_size=8,
            use_fm=True, dnn_hidden_units=(128, 128), l2_reg_linear=0.00001, l2_reg_embedding=0.00001, l2_reg_dnn=0,
-           init_std=0.0001, seed=1024, dnn_dropout=0, dnn_activation='relu', dnn_use_bn=False, task='binary'):
+           init_std=0.0001, seed=2019, dnn_dropout=0, dnn_activation='relu', dnn_use_bn=False, task='regression'):
     """Instantiates the DeepFM Network architecture.
 
     :param feature_dim_dict: dict,to indicate sparse field and dense field like {'sparse':{'field_1':4,'field_2':3,'field_3':2},'dense':['field_4','field_5']}
