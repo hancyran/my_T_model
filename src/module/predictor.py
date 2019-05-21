@@ -21,7 +21,7 @@ def getPreds(model, X_test, test_df, pred_type='lr'):
 
         test_sample_df = pd.merge(test_sample_df, standard, how="left", left_on='广告id', right_on='广告id')
 
-        test_sample_df['preds'] = test_sample_df.apply(lambda x: x['基准预测值'] + 0.0001 * (x['曝光广告出价bid'] - x['基准bid']),
+        test_sample_df['preds'] = test_sample_df.apply(lambda x: x['基准预测值'] + 0.01 * (x['曝光广告出价bid'] - x['基准bid']),
                                                        axis=1)
         #         test_sample_df.sort_index(inplace=True)
 
