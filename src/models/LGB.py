@@ -1,10 +1,10 @@
 import lightgbm as lgb
 
 
-def createLGB(max_depth=7, learning_rate=0.1, n_estimators=1500, feature_fraction=1.0, objective='regression'):
+def createLGB(max_depth=7, learning_rate=0.1, n_estimators=1500, feature_fraction=1.0, objective='fair', num_leaves=31):
     model = lgb.LGBMRegressor(max_depth=max_depth,
                               learning_rate=learning_rate,
-                              #                               num_leaves=64,
+                              num_leaves=num_leaves,
                               n_estimators=n_estimators,
                               subsample=0.8,
                               colsample_bytree=0.7,

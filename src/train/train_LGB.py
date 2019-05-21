@@ -26,7 +26,7 @@ from src.utils.submission_creator import create_submit
 
 
 def trainLGB(train_type='cv',
-             max_depth=5, learning_rate=0.1, n_estimators=1500, feature_fraction=1.0, objective='regression'):
+             max_depth=5, learning_rate=0.1, n_estimators=1500, feature_fraction=1.0, objective='fair', num_leaves=31):
     # read data
     print('Loading data...')
     if train_type == 'cv':
@@ -38,7 +38,7 @@ def trainLGB(train_type='cv',
 
     # create regressor
     model = createLGB(n_estimators=n_estimators, max_depth=max_depth, learning_rate=learning_rate,
-                      feature_fraction=feature_fraction, objective=objective)
+                      feature_fraction=feature_fraction, objective=objective, num_leaves=num_leaves)
 
     ######### start cv training #############
 

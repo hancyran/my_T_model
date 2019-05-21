@@ -9,7 +9,7 @@ Reference:
 import numpy as np
 import tensorflow as tf
 from sklearn.base import BaseEstimator, TransformerMixin
-from sklearn.metrics import roc_auc_score
+from sklearn.metrics import mean_squared_error
 from time import time
 from tensorflow.contrib.layers.python.layers import batch_norm as batch_norm
 
@@ -26,7 +26,7 @@ class DeepFM(BaseEstimator, TransformerMixin):
                  batch_norm=0, batch_norm_decay=0.995,
                  verbose=False, random_seed=2016,
                  use_fm=True, use_deep=True,
-                 loss_type="logloss", eval_metric=roc_auc_score,
+                 loss_type="mse", eval_metric=mean_squared_error,
                  l2_reg=0.0, greater_is_better=True):
         assert (use_fm or use_deep)
         assert loss_type in ["logloss", "mse"], \
