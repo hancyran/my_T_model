@@ -22,7 +22,7 @@ def getResultPath():
     return result_path
 
 
-def getLogPath(train_type):
-    date = time.strftime('%m-%d | %H:%M', time.localtime(time.time() + 3600 * 8))
-    log_path = args.log_path + "/" + train_type + "-" + date + ".txt"
+def getLogPath(train_type, i):
+    # date = time.strftime('%m-%d | %H:%M', time.localtime(time.time() + 3600 * 8))
+    log_path = args.log_path + "/" + train_type + "-" + str(i) + ".txt"
     return log_path
