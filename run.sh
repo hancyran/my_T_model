@@ -1,1 +1,1 @@
-setsid python run.py > log/run.txt 2>&1 &
+setsid python train_LGB_bg.py > log/log_learning_rate_LGB.txt 2>&1 &

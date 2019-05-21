@@ -1,15 +1,10 @@
 import sys
 
 from src.train.train_LGB import trainLGB
+from src.utils.LGB_args import args
 
-train_type = sys.argv[1]
-
-try:
-    learning_rate = int(sys.argv[2])
-    if train_type == 'cv':
-        trainLGB('cv', learning_rate=learning_rate)
-    elif train_type == 'val':
-        trainLGB('val', learning_rate=learning_rate)
-except:
-    if train_type == 'test':
-        trainLGB('test')
+for i, n in enumerate(args.learning_rate):
+    print('CV Time: %d' % i)
+    trainLGB('cv', learning_rate=n)
+    print('Val Time: %d' % i)
+    trainLGB('val', learning_rate=n)
