@@ -3,7 +3,7 @@ class args:
 
     log_path = root_path+ '/log'
     # data_path = '/data'
-    train_data_path = root_path+  '/train2'
+    train_data_path = root_path + '/train2'
     test_data_path = root_path+'/test2'
     combine_feat_data_path = root_path+'/combine'
     tmp_data_path = root_path+'/tmp'

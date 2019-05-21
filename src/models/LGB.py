@@ -11,6 +11,7 @@ def createLGB(max_depth=5, learning_rate=0.1, n_estimators=5000, feature_fractio
                               #                               subsample_for_bin=50000,
                               min_child_weight=1,
                               reg_alpha=0,
+
                               reg_lambda=5,
                               scale_pos_weight=1,
                               #                               min_split_gain=0,
