@@ -16,9 +16,8 @@ from src.utils.file_path_util import getLogPath
 
 learning_rate_list = args.learning_rate
 
-for i, n in enumerate(learning_rate_list):
-    print('CV Tuning %d\n' % i)
-    os.system('setsid python train_LGB_bg.py cv %d> %s 2>&1 &' % (n, getLogPath('cv')))
-    print('Val Tuning %d\n' % i)
-    os.system('setsid python train_LGB_bg.py val %d> %s 2>&1 &' % (n, getLogPath('val')))
+with open('run.sh', 'w') as f:
+    for i, n in enumerate(learning_rate_list):
+        f.write('setsid python train_LGB_bg.py cv %.4f> %s 2>&1 &\n' % (n, getLogPath('cv')))
+        f.write('setsid python train_LGB_bg.py val %.4f> %s 2>&1 &\n' % (n, getLogPath('val')))
 
