@@ -7,12 +7,12 @@ from src.utils.LGB_args import args
 # n = float(sys.argv[2])
 
 # learning_rate_list = args.learning_rate
-depth_list = args.max_depth
+objective_list = args.objective
 
-for i, n in enumerate(depth_list):
+for i, n in enumerate(objective_list):
     # f.write('setsid python train_LGB_bg.py cv %.4f> %s 2>&1 &\n' % (n, getLogPath('cv', i)))
     # f.write('setsid python train_LGB_bg.py val %.4f> %s 2>&1 &\n' % (n, getLogPath('val', i)))
     print('Time %d' %i)
-    trainLGB('cv', max_depth=n)
-    trainLGB('val', max_depth=n)
+    trainLGB('cv', objective=n)
+    trainLGB('val', objective=n)
 

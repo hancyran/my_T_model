@@ -1,4 +1,3 @@
-
 import os
 import sys
 
@@ -9,11 +8,13 @@ from matplotlib import pyplot as plt
 from sklearn.metrics import make_scorer
 from sklearn.model_selection import StratifiedKFold
 
-import config
-from metrics import gini_norm
-from DataReader import FeatureDictionary, DataParser
+
+from src.deepfm.DeepFM import DeepFM
+from src.deepfm.example import config
+from src.deepfm.example.DataReader import FeatureDictionary, DataParser
+from src.deepfm.example.metrics import gini_norm
+
 sys.path.append("..")
-from DeepFM import DeepFM
 
 gini_scorer = make_scorer(gini_norm, greater_is_better=True, needs_proba=True)
 
@@ -64,6 +65,7 @@ def _run_base_model_dfm(dfTrain, dfTest, folds, dfm_params):
     for i, (train_idx, valid_idx) in enumerate(folds):
         Xi_train_, Xv_train_, y_train_ = _get(Xi_train, train_idx), _get(Xv_train, train_idx), _get(y_train, train_idx)
         Xi_valid_, Xv_valid_, y_valid_ = _get(Xi_train, valid_idx), _get(Xv_train, valid_idx), _get(y_train, valid_idx)
+
 
         dfm = DeepFM(**dfm_params)
         dfm.fit(Xi_train_, Xv_train_, y_train_, Xi_valid_, Xv_valid_, y_valid_)
