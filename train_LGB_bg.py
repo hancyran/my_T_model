@@ -3,6 +3,7 @@ import sys
 from src.train.train_LGB import trainLGB
 
 train_type = sys.argv[1]
+
 try:
     learning_rate = int(sys.argv[2])
     if train_type == 'cv':
