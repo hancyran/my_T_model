@@ -1,7 +1,7 @@
 import lightgbm as lgb
 
 
-def createLGB(max_depth=5, learning_rate=0.01, n_estimators=10000, feature_fraction=1.0):
+def createLGB(max_depth=5, learning_rate=0.1, n_estimators=5000, feature_fraction=1.0, objective='regression'):
     model = lgb.LGBMRegressor(max_depth=max_depth,
                               learning_rate=learning_rate,
                               #                               num_leaves=64,
@@ -18,9 +18,9 @@ def createLGB(max_depth=5, learning_rate=0.01, n_estimators=10000, feature_fract
                               #                               subsample_freq=1,
                               seed=2019,
                               boosting_type='gbdt',
-                              feature_fraction= feature_fraction,
+                              feature_fraction=feature_fraction,
                               #                               boosting_type='dart',
-                              objective='regression',
+                              objective=objective,
                               nthread=32, silent=True)
     #     model.set_params(**{'objective': custom_sample_train}, metrics = ["mse", 'mae'])
 

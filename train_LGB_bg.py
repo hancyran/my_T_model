@@ -7,7 +7,7 @@ n_estimator_list = args.n_estimators
 # rate= args.learning_rate
 
 for i, n in enumerate(n_estimator_list):
-    print('Val Tuning %d\n' % i)
+    print('CV Tuning %d\n' % i)
     trainLGB('cv', n_estimators=n)
 
 for i, n in enumerate(n_estimator_list):
