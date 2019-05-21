@@ -17,7 +17,7 @@ def getPreds(model, X_test, test_df, pred_type='lr'):
         standard_index = test_sample_df.groupby(by='广告id', as_index=False, sort=False).head(1).index
         preds = model.predict(X_test[standard_index])
         preds = np.array([checkPos(x) for x in preds])
-        standard['基准预测值'] = preds
+        standard['基准预测值'] = np.around(preds, 4)
 
         test_sample_df = pd.merge(test_sample_df, standard, how="left", left_on='广告id', right_on='广告id')
 
@@ -25,7 +25,7 @@ def getPreds(model, X_test, test_df, pred_type='lr'):
                                                        axis=1)
         #         test_sample_df.sort_index(inplace=True)
 
-        return np.around(test_sample_df['preds'].values, 4)
+        return test_sample_df['preds'].values
     elif pred_type == 'direct':
         # 直接用模型进行预测，与其他规则无关
         return np.around(model.predict(X_test), 4)

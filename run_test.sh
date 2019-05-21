@@ -1,1 +1,1 @@
-setsid python train_LGB_bg.py test > log/log_test_for_LGB.txt 2>&1 &
+setsid python test_LGB_bg.py test > log/log_test_for_LGB.txt 2>&1 &
