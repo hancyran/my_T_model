@@ -12,7 +12,8 @@ from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.metrics import roc_auc_score
 from time import time
 from tensorflow.contrib.layers.python.layers import batch_norm as batch_norm
-from yellowfin import YFOptimizer
+
+from src.deepfm.yellowfin import YFOptimizer
 
 
 class DeepFM(BaseEstimator, TransformerMixin):
