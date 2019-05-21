@@ -8,12 +8,13 @@ from src.utils.LGB_args import args
 
 # learning_rate_list = args.learning_rate
 # objective_list = args.objective
-n_leaves_list = args.num_leaves
+# n_leaves_list = args.num_leaves
+reg_lambda = args.reg_lambda
 
-for i, n in enumerate(n_leaves_list):
+for i, n in enumerate(reg_lambda):
     # f.write('setsid python train_LGB_bg.py cv %.4f> %s 2>&1 &\n' % (n, getLogPath('cv', i)))
     # f.write('setsid python train_LGB_bg.py val %.4f> %s 2>&1 &\n' % (n, getLogPath('val', i)))
     print('Time %d' %i)
-    trainLGB('cv', num_leaves=n)
-    trainLGB('val', num_leaves=n)
+    trainLGB('cv', reg_lambda=n)
+    trainLGB('val', reg_lambda=n)
 
