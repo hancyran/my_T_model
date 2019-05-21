@@ -1,1 +1,1 @@
-setsid python run.py > log/log_n_estimator_for_LGB.txt 2>&1 &
+setsid python run.py > log/run.txt 2>&1 &
