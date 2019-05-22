@@ -1,4 +1,6 @@
 import os
+import shutil
+
 import gc
 
 import numpy as np
@@ -12,17 +14,17 @@ def getUserData(train_type):
     if train_type == 'cv':
         #### train dataset
         if os.path.exists(pargs.tmp_data_path + '/tmp_train_data_user.npy'):
-            X_train = np.load(fargs.tmp_data_path + '/tmp_train_data_user.npy')
+            X_train = np.load(pargs.tmp_data_path + '/tmp_train_data_user.npy')
         else:
             X_train = np.load(pargs.train_data_path + '/train_arr_user_age.npy')
             for n, i in enumerate(fargs.user_feat):
                 if n == 0:
                     pass
                 else:
-                    X_train = np.concatenate((X_train, np.load(fargs.train_data_path + '/train_arr_%s.npy' % i)), axis=1)
+                    X_train = np.concatenate((X_train, np.load(pargs.train_data_path + '/train_arr_%s.npy' % i)), axis=1)
 
             # save as tmp file
-            np.save(fargs.tmp_data_path + '/tmp_train_data_user.npy', X_train)
+            np.save(pargs.tmp_data_path + '/tmp_train_data_user.npy', X_train)
 
         return X_train
 
@@ -46,13 +48,14 @@ def getUserData(train_type):
                     if n == 0:
                         pass
                     else:
-                        X_train = np.concatenate((X_train, np.load(fargs.train_data_path + '/train_arr_%s.npy' % i)), axis=1)
+                        X_train = np.concatenate((X_train, np.load(pargs.train_data_path + '/train_arr_%s.npy' % i)), axis=1)
 
                 # save as tmp file
-                np.save(fargs.tmp_data_path + '/tmp_train_data_user.npy', X_train)
+                np.save(pargs.tmp_data_path + '/tmp_train_data_user.npy', X_train)
 
             # train_df
-            test_df = pd.read_hdf(pargs.train_data_path + '/train_origin_final.h5')
+            shutil.copy(pargs.train_data_path + '/train_origin_final.h5', './')
+            test_df = pd.read_hdf('train_origin_final.h5')
 
             # pepare for dataset
             i = test_df.loc[test_df.日期 == 319].index

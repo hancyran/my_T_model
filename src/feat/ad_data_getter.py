@@ -1,5 +1,6 @@
 import os
 import gc
+import shutil
 
 import numpy as np
 import pandas as pd
@@ -30,7 +31,8 @@ def getAdData(train_type):
         Y_train = np.load(pargs.train_data_path + '/train_arr_label.npy')
 
         # train_df
-        test_df = pd.read_hdf(pargs.train_data_path + '/train_origin_final.h5')
+        shutil.copy(pargs.train_data_path + '/train_origin_final.h5', './')
+        test_df = pd.read_hdf('train_origin_final.h5')
 
         return X_train, Y_train, test_df
 
@@ -46,7 +48,8 @@ def getAdData(train_type):
             Y_val_label = np.load(pargs.tmp_data_path + '/tmp_val_train_label.npy')
 
             # train_df
-            test_df = pd.read_hdf(pargs.train_data_path + '/train_origin_final.h5')
+            shutil.copy(pargs.train_data_path + '/train_origin_final.h5', './')
+            test_df = pd.read_hdf('train_origin_final.h5')
 
         else:
             #### original train dataset
@@ -58,7 +61,8 @@ def getAdData(train_type):
                     if n == 0:
                         pass
                     elif n < 7:
-                        X_train = np.concatenate((X_train, np.load(pargs.train_data_path + '/train_arr_%s.npy' % i)), axis=1)
+                        X_train = np.concatenate((X_train, np.load(pargs.train_data_path + '/train_arr_%s.npy' % i)),
+                                                 axis=1)
                     else:
                         X_train = np.concatenate((X_train, np.load(pargs.train_data_path + '/train_arr_%s_scaled.npy' % i)),
                                                  axis=1)
@@ -69,7 +73,8 @@ def getAdData(train_type):
             # original train label
             Y_train = np.load(pargs.train_data_path + '/train_arr_label.npy')
             # train_df
-            test_df = pd.read_hdf(pargs.train_data_path + '/train_origin_final.h5')
+            shutil.copy(pargs.train_data_path + '/train_origin_final.h5', './')
+            test_df = pd.read_hdf('train_origin_final.h5')
 
             # pepare for dataset
             i = test_df.loc[test_df.日期 == 319].index
@@ -115,7 +120,8 @@ def getAdData(train_type):
         Y_train = np.load(pargs.train_data_path + '/train_arr_label.npy')
 
         # train_df
-        test_df = pd.read_hdf(pargs.test_data_path + '/test_origin_final.h5')
+        shutil.copy(pargs.test_data_path + '/test_origin_final.h5', './')
+        test_df = pd.read_hdf('test_origin_final.h5')
 
         ### test dataset
         if os.path.exists(pargs.tmp_data_path + '/tmp_test_data.npy'):
