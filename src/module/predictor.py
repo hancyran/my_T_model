@@ -29,5 +29,7 @@ def getPreds(model, X_test, test_df=None, pred_type='lr'):
     elif pred_type == 'direct':
         # 直接用模型进行预测，与其他规则无关
         return np.around(model.predict(X_test), 4)
+    elif pred_type == 'dfm':
+        return np.around(model.predict(X_test, batch_size=256), 4)
     else:
         raise Exception('No such Predict Method')
