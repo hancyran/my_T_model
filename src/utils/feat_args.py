@@ -1,4 +1,4 @@
-class feat_args:
+class fargs:
     feat2_list = ['广告id', '日期', '曝光广告素材尺寸', '广告行业id', '商品类型', '商品id', '广告账户id',
                   '创建日期', '创建星期', '投放时段']
 
