@@ -10,13 +10,11 @@ from sklearn.externals import joblib
 from sklearn.model_selection import StratifiedKFold
 
 from src.eval.metric import getSample, getMonoScore
-from src.feat.data_getter import getData, getData_feat3
 from src.feat.deepfm_data_getter import getDfmData
-from src.models.LGB import createLGB
 from src.models.deepfm import DeepFM
 from src.module.predictor import getPreds
 from src.utils.feat_args import args
-from src.utils.file_path_util import getModelPath, getResultPath
+from src.utils.file_path_util import getModelPath
 from src.utils.misc_util import checkPos
 
 # val : test with validation set()
