@@ -27,7 +27,7 @@ from src.utils.submission_creator import create_submit
 from src.utils.dfm_utils import SingleFeat, VarLenFeat
 
 
-def trainLGB(train_type='cv'):
+def trainDFM(train_type='cv'):
     # read data
     print('Loading data...')
     if train_type == 'cv':
