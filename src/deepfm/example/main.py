@@ -88,7 +88,7 @@ def _run_base_model_dfm(dfTrain, dfTest, folds, dfm_params):
         clf_str = "DNN"
     print("%s: %.5f (%.5f)"%(clf_str, gini_results_cv.mean(), gini_results_cv.std()))
     filename = "%s_Mean%.5f_Std%.5f.csv"%(clf_str, gini_results_cv.mean(), gini_results_cv.std())
-    _make_submission(ids_test, y_test_meta, filename)
+    # _make_submission(ids_test, y_test_meta, filename)
 
     _plot_fig(gini_results_epoch_train, gini_results_epoch_valid, clf_str)
 
@@ -149,13 +149,13 @@ dfm_params = {
 }
 y_train_dfm, y_test_dfm = _run_base_model_dfm(dfTrain, dfTest, folds, dfm_params)
 
-# ------------------ FM Model ------------------
+# # ------------------ FM Model ------------------
 # fm_params = dfm_params.copy()
 # fm_params["use_deep"] = False
 # y_train_fm, y_test_fm = _run_base_model_dfm(dfTrain, dfTest, folds, fm_params)
-#
-#
-# ------------------ DNN Model ------------------
+
+
+# # ------------------ DNN Model ------------------
 # dnn_params = dfm_params.copy()
 # dnn_params["use_fm"] = False
 # y_train_dnn, y_test_dnn = _run_base_model_dfm(dfTrain, dfTest, folds, dnn_params)

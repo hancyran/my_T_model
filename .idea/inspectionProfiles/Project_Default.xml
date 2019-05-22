@@ -57,6 +57,8 @@
           <option value="lightgbm" />
           <option value="xgboost" />
           <option value="tensorflow" />
+          <option value="src.train.train_dfm.VarLenFeat" />
+          <option value="src.train.train_dfm.SingleFeat" />
         </list>
       </option>
     </inspection_tool>

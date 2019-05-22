@@ -1,5 +1,6 @@
 class args:
-    root_path = '/jet/workspace/2019Tencent'
+    # root_path = '/jet/workspace/2019Tencent'
+    root_path = '/mnt/tencent'
 
     log_path = root_path+ '/log'
     # data_path = '/data'

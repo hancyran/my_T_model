@@ -40,7 +40,8 @@ def getFinalData(train_type):
             X_train = np.concatenate((X_train, X_train_user), axis=1)
         return X_train, Y_train, test_df
     elif train_type == 'val':
-        if os.path.exists(args.tmp_data_path+'/tmp_tri_train_final_data.npy') and os.path.exists(args.tmp_data_path+ '/tmp_tri_train_final_data.npy'):
+        if os.path.exists(args.tmp_data_path+'/tmp_tri_train_final_data.npy') \
+                and os.path.exists(args.tmp_data_path+ '/tmp_tri_train_final_data.npy'):
             X_train = np.load(args.tmp_data_path+'/tmp_tri_train_final_data.npy')
             X_test = np.load(args.tmp_data_path+'/tmp_tri_train_final_data.npy')
             _, Y_train, _, Y_test, test_df = getAdData('val')

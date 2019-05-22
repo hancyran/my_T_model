@@ -5,7 +5,7 @@ from src.utils.misc_util import checkPos
 import numpy as np
 
 
-def getPreds(model, X_test, test_df, pred_type='lr'):
+def getPreds(model, X_test, test_df=None, pred_type='lr'):
     if pred_type == 'lr':
         test_sample_df = test_df[['广告id', '曝光广告出价bid']]
         #         test_sample_df.sort_values(by=["广告id","曝光广告出价bid"],inplace=True)
