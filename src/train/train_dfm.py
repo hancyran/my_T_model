@@ -13,7 +13,7 @@ from src.eval.metric import getSample, getMonoScore
 from src.feat.deepfm_data_getter import getDfmData
 from src.models.deepfm import DeepFM
 from src.module.predictor import getPreds
-from src.utils.feat_args import args
+from src.utils.feat_args import feat_args
 from src.utils.file_path_util import getModelPath
 from src.utils.misc_util import checkPos
 
@@ -34,13 +34,13 @@ def trainDFM(train_type='cv'):
     elif train_type == 'test':
         X_train, Y_train, X_test, test_df = getDfmData('test')
 
-    feats = args.all_feat
-    ad_feat_dict = args.ad_feat_dict
+    feats = feat_args.all_feat
+    ad_feat_dict = feat_args.ad_feat_dict
     # feats
-    onehot_feats = args.onehot_feats
-    numeric_feats = args.numeric_feats
-    user_feat_dict = args.user_feat_dict
-    max_len_dict = args.max_len_for_feats
+    onehot_feats = feat_args.onehot_feats
+    numeric_feats = feat_args.numeric_feats
+    user_feat_dict = feat_args.user_feat_dict
+    max_len_dict = feat_args.max_len_for_feats
 
     # prepare for feat field
     sparse_feat_list = []

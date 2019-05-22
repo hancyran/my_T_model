@@ -1,4 +1,4 @@
-class args:
+class path_args:
     # root_path = '/jet/workspace/2019Tencent'
     root_path = '/mnt/tencent'
 

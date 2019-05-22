@@ -1,1 +1,1 @@
-class args:
+class deepfm_args:
