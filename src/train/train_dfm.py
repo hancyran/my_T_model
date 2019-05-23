@@ -52,9 +52,9 @@ def trainDFM(train_type='cv'):
         elif i in numeric_feats:
             dense_feat_list += [SingleFeat(i, 0)]
         elif i == 'period':
-            sequence_feat_list += [VarLenFeat(i, len(ad_feat_dict.get(i), max_len_dict.get(i), 'mean'))]
+            sequence_feat_list += [VarLenFeat(i, len(ad_feat_dict.get(i)), max_len_dict.get(i), 'mean')]
         elif i in user_feat_dict:
-            sequence_feat_list += [VarLenFeat(i, len(user_feat_dict.get(i), max_len_dict.get(i), 'mean'))]
+            sequence_feat_list += [VarLenFeat(i, len(user_feat_dict.get(i)), max_len_dict.get(i), 'mean')]
 
     # create regressor
     model = DeepFM({"sparse": sparse_feat_list, "dense": dense_feat_list, "sequence": sequence_feat_list},
@@ -72,18 +72,24 @@ def trainDFM(train_type='cv'):
         #
         sample_list = []
         mono_score_list = []
-        for i, (train, test) in enumerate(skf.split(X_train, Y_train)):
+
+        folds = list(skf.split(X_train, Y_train))
+        X_train = list(X_train.values())
+        for i, (train, test) in enumerate(folds):
             print("Fold: ", i)
             start = time.time()
+
+            train_data = [x[train] for x in X_train]
+            test_data = [x[test] for x in X_train]
             # train model
             # model.fit(X_train[train], Y_train[train], eval_metric='l1', categorical_feature=[0, 3, 4, 5, 6, 9],
             #           #                       early_stopping_rounds=100,
             #           eval_set=[(X_train[train], Y_train[train]), (X_train[test], Y_train[test])]
             #           )
-            model.fit(X_train[train], Y_train[train], batch_size=256, epochs=10, verbose=2)
+            model.fit(train_data, Y_train[train], batch_size=256, epochs=10, verbose=2)
             # predict
             #             preds = model.predict(X_train[test])
-            preds = getPreds(model, X_train[test], test_df.iloc[test], pred_type='dfm')
+            preds = getPreds(model,test_data, test_df.iloc[test], pred_type='dfm')
             preds = np.array([checkPos(x) for x in preds])
 
             end = time.time()
