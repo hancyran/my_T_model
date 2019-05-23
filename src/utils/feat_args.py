@@ -32,6 +32,8 @@ class fargs:
     user_feat = list(user_feat_dict.keys())
     all_feat = ad_feat + user_feat
 
+    missing_feat = ['ad_factory_id', 'product_id']
+
     # dfm feats
     onehot_feats = ['id', 'create_weekday', 'ad_factory_id', 'product_type_id', 'product_id', 'acc_id']
     numeric_feats = ['request_date_id', 'create_date_id', 'bid', 'size']

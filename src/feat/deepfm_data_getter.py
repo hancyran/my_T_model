@@ -68,6 +68,13 @@ from src.utils.path_args import pargs
 def getDfmData(train_type):
     def convert(x):
         return np.where(x)[0].tolist()
+        # return [np.where(y) if np.where(y)[0].tolist() == [] else 0 for y in x]
+
+    def arr_to_list(x):
+        if x.tolist():
+            return x.tolist()[0]
+        else:
+            return 0
 
     if train_type == 'cv':
         dic = dict()
@@ -79,9 +86,13 @@ def getDfmData(train_type):
         for n, i in enumerate(fargs.all_feat):
             if n == 0:
                 pass
-            elif n < 6:
+            elif n < 6 and i not in fargs.missing_feat:
                 # X_train = np.concatenate((X_train, np.load(pargs.train_data_path + '/train_arr_%s.npy' % i)), axis=1)
                 dic[i] = np.nonzero(np.load(pargs.train_data_path + '/train_arr_%s.npy' % i))[1]
+            elif i in fargs.missing_feat:
+                dic[i] = np.array([arr_to_list(np.where(y)[0]) for y in
+                                   np.load(pargs.train_data_path + '/train_arr_%s.npy' % i)])
+
             elif 7 <= n <= 10:
                 # X_train = np.concatenate((X_train, np.load(pargs.train_data_path + '/train_arr_%s_scaled.npy' % i)),
                 # axis=1)

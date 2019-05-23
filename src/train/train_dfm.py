@@ -73,14 +73,14 @@ def trainDFM(train_type='cv'):
         sample_list = []
         mono_score_list = []
 
-        folds = list(skf.split(X_train, Y_train))
-        X_train = list(X_train.values())
+        folds = list(skf.split(np.zeros(178541), np.zeros(178541)))
+        # X_train = list(X_train.values())
         for i, (train, test) in enumerate(folds):
             print("Fold: ", i)
             start = time.time()
 
-            train_data = [x[train] for x in X_train]
-            test_data = [x[test] for x in X_train]
+            train_data = [X_train.get(x)[train] for x in X_train.keys()]
+            test_data = [X_train.get(x)[test] for x in X_train.keys()]
             # train model
             # model.fit(X_train[train], Y_train[train], eval_metric='l1', categorical_feature=[0, 3, 4, 5, 6, 9],
             #           #                       early_stopping_rounds=100,
@@ -89,7 +89,7 @@ def trainDFM(train_type='cv'):
             model.fit(train_data, Y_train[train], batch_size=256, epochs=10, verbose=2)
             # predict
             #             preds = model.predict(X_train[test])
-            preds = getPreds(model,test_data, test_df.iloc[test], pred_type='dfm')
+            preds = getPreds(model, test_data, test_df.iloc[test], pred_type='dfm')
             preds = np.array([checkPos(x) for x in preds])
 
             end = time.time()
@@ -117,6 +117,8 @@ def trainDFM(train_type='cv'):
         #     model.save_model(getModelPath('lightGBM-cv'))
         joblib.dump(model, getModelPath('lightGBM-cv'))
     ######### end cv training #############
+
+
 
     ######### start val training #############
 
