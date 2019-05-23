@@ -1,1 +1,1 @@
-setsid python train_LGB_bg.py> log/log_lambda.txt 2>&1 &
+setsid python train_dfm_bg.py> log/log_dfm_normal.txt 2>&1 &

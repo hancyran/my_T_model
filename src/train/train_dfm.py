@@ -68,7 +68,7 @@ def trainDFM(train_type='cv'):
 
     if train_type == 'cv':
         print("Start CV Training...")
-        skf = StratifiedKFold(n_splits=5, shuffle=True, random_state=2019)
+        skf = StratifiedKFold(n_splits=3, shuffle=True, random_state=2019)
         #
         sample_list = []
         mono_score_list = []
@@ -118,9 +118,13 @@ def trainDFM(train_type='cv'):
         print("Final MonoScore: %f " % final_mono_score)
         print("Final TotalScore: %f" % (0.4 * (1 - final_sample / 2) + 0.6 * (final_mono_score + 1) / 2))
         print("Expect TotalScore: %f" % (0.4 * (1 - final_sample / 2) + 0.6 * (1 + 1) / 2))
-        print("Saving Model " + getModelPath('lightGBM-cv'))
+        print("Saving Model " + getModelPath('deepfm-cv'))
         #     model.save_model(getModelPath('lightGBM-cv'))
-        joblib.dump(model, getModelPath('lightGBM-cv'))
+        # serialize model to JSON
+        model_yaml = model.to_yaml()
+        with open(getModelPath('deepfm-cv'), "w") as yaml:
+            yaml.write(model_yaml)
+
     ######### end cv training #############
 
     ######### start val training #############
@@ -166,9 +170,11 @@ def trainDFM(train_type='cv'):
         print("Final MonoScore: %f " % final_mono_score)
         print("Final TotalScore: %f" % (0.4 * (1 - final_sample / 2) + 0.6 * (final_mono_score + 1) / 2))
         print("Expect TotalScore: %f" % (0.4 * (1 - final_sample / 2) + 0.6 * (1 + 1) / 2))
-        print("Saving Model " + getModelPath('lightGBM-val'))
+        print("Saving Model " + getModelPath('deepfm-val'))
         #     model.save_model(getModelPath('lightGBM-val'))
-        joblib.dump(model, getModelPath('lightGBM-val'))
+        model_yaml = model.to_yaml()
+        with open(getModelPath('deepfm-val'), "w") as yaml:
+            yaml.write(model_yaml)
     ######### end val training #############
 
     ######### start testing dataset #############
@@ -176,30 +182,37 @@ def trainDFM(train_type='cv'):
     # training whole dataset
     if train_type == 'test':
         print("Start Test Training...")
-        skf = StratifiedKFold(n_splits=10, shuffle=True, random_state=2019)
-        #
-        sample_list = []
-        mono_score_list = []
+        skf = StratifiedKFold(n_splits=3, shuffle=True, random_state=2019)
+        folds = list(skf.split(np.zeros(178541), np.zeros(178541)))
+
+        sparse_input = [X_train.get(feat) for feat in X_train.keys() if feat in fargs.onehot_feats]
+        dense_input = [X_train.get(feat) for feat in X_train.keys() if feat in fargs.numeric_feats]
+        sequence_input = [X_train.get(feat) for feat in X_train.keys() if feat in fargs.sequence_feats]
+        model_input = sparse_input + dense_input + sequence_input
         final_preds = np.zeros(X_test.shape[0])
-        for i, (train, test) in enumerate(skf.split(X_train, Y_train)):
+        for i, (train, test) in enumerate(folds):
             print("Fold: ", i)
             start = time.time()
             # train model
-            model.fit(X_train[train], Y_train[train], eval_metric='l1', categorical_feature=[0, 3, 4, 5, 6, 9],
-                      #                       early_stopping_rounds=500,
-                      eval_set=[(X_train[train], Y_train[train]), (X_train[test], Y_train[test])]
-                      )
+            train_data = [x[train] for x in model_input]
+            test_data = [x[test] for x in model_input]
+
+            # train model
+            model.fit(train_data, Y_train[train], batch_size=256, epochs=10, verbose=2)
+
             # predict
-            preds = getPreds(model, X_test, test_df)
+            preds = getPreds(model, test_data, test_df)
             final_preds = final_preds + preds * 0.1
             end = time.time()
             # output the cost time
             print("The fold cost %f mins" % ((int(end) - int(start)) / 60))
         print("End Test Training...")
         # save model
-        print("Saving Model " + getModelPath('lightGBM-test'))
+        print("Saving Model " + getModelPath('deepfm-test'))
         #         model.save_model(getModelPath('lightGBM-test'))
-        joblib.dump(model, getModelPath('lightGBM-test'))
+        model_yaml = model.to_yaml()
+        with open(getModelPath('deepfm-test'), "w") as yaml:
+            yaml.write(model_yaml)
         ######### end testing dataset #############
 
         ############### export preds as csv ###################

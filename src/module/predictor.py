@@ -15,7 +15,7 @@ def getPreds(model, X_test, test_df=None, pred_type='lr'):
         standard.rename(columns={'曝光广告出价bid': '基准bid'}, inplace=True)
 
         standard_index = test_sample_df.groupby(by='广告id', as_index=False, sort=False).head(1).index
-        preds = model.predict(X_test[standard_index])
+        preds = model.predict(X_test[standard_index], batch_size=256)
         preds = np.array([checkPos(x) for x in preds])
         standard['基准预测值'] = np.around(preds, 4)
 
