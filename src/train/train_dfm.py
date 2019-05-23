@@ -73,14 +73,19 @@ def trainDFM(train_type='cv'):
         sample_list = []
         mono_score_list = []
 
+        sparse_input = [X_train.get(feat) for feat in X_train.keys() if feat in fargs.onehot_feats]
+        dense_input = [X_train.get(feat) for feat in X_train.keys() if feat in fargs.numeric_feats]
+        sequence_input = [X_train.get(feat) for feat in X_train.keys() if feat in fargs.sequence_feats]
+        model_input = sparse_input + dense_input + sequence_input
+
         folds = list(skf.split(np.zeros(178541), np.zeros(178541)))
         # X_train = list(X_train.values())
         for i, (train, test) in enumerate(folds):
             print("Fold: ", i)
             start = time.time()
 
-            train_data = [X_train.get(x)[train] for x in X_train.keys()]
-            test_data = [X_train.get(x)[test] for x in X_train.keys()]
+            train_data = [x[train] for x in model_input]
+            test_data = [x[test] for x in model_input]
             # train model
             # model.fit(X_train[train], Y_train[train], eval_metric='l1', categorical_feature=[0, 3, 4, 5, 6, 9],
             #           #                       early_stopping_rounds=100,
@@ -117,8 +122,6 @@ def trainDFM(train_type='cv'):
         #     model.save_model(getModelPath('lightGBM-cv'))
         joblib.dump(model, getModelPath('lightGBM-cv'))
     ######### end cv training #############
-
-
 
     ######### start val training #############
 

@@ -37,6 +37,10 @@ class fargs:
     # dfm feats
     onehot_feats = ['id', 'create_weekday', 'ad_factory_id', 'product_type_id', 'product_id', 'acc_id']
     numeric_feats = ['request_date_id', 'create_date_id', 'bid', 'size']
+    sequence_feats = ['period'] + list(user_feat_dict.keys())
+
     max_len_for_feats = {'period': 48, 'user_age': 1000, 'user_gender': 6, 'user_area': 4419, 'user_status': 15,
                          'user_work': 6, 'user_behavior': 19752,
                          'user_device': 10, 'user_connectionType': 6, 'user_education': 8, 'user_consuptionAbility': 5}
+
+

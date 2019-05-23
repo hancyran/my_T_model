@@ -81,25 +81,26 @@ def getDfmData(train_type):
         Y_train = np.load(pargs.train_data_path + '/train_arr_label.npy')
         test_df = pd.read_hdf(pargs.train_data_path + '/train_origin_final.h5')
 
-        dic['id'] = np.nonzero(np.load(pargs.train_data_path + '/train_arr_id.npy'))[1]
+        dic['id'] = np.nonzero(np.load(pargs.train_data_path + '/train_arr_id.npy'))[1] + 1
 
         for n, i in enumerate(fargs.all_feat):
             if n == 0:
                 pass
             elif n < 6 and i not in fargs.missing_feat:
                 # X_train = np.concatenate((X_train, np.load(pargs.train_data_path + '/train_arr_%s.npy' % i)), axis=1)
-                dic[i] = np.nonzero(np.load(pargs.train_data_path + '/train_arr_%s.npy' % i))[1]
+                dic[i] = np.nonzero(np.load(pargs.train_data_path + '/train_arr_%s.npy' % i))[1] + 1
             elif i in fargs.missing_feat:
                 dic[i] = np.array([arr_to_list(np.where(y)[0]) for y in
-                                   np.load(pargs.train_data_path + '/train_arr_%s.npy' % i)])
+                                   np.load(pargs.train_data_path + '/train_arr_%s.npy' % i)]) + 1
 
             elif 7 <= n <= 10:
                 # X_train = np.concatenate((X_train, np.load(pargs.train_data_path + '/train_arr_%s_scaled.npy' % i)),
                 # axis=1)
                 dic[i] = np.load(pargs.train_data_path + '/train_arr_%s_scaled.npy' % i)
-            else:
-                X_train = np.load(pargs.train_data_path + '/train_arr_period.npy')
+            elif i in fargs.sequence_feats:
+                X_train = np.load(pargs.train_data_path + '/train_arr_%s.npy' % i)
                 typ = list(map(convert, (X_train == 1)))
+                typ = [list(x+1 for x in y) for y in typ]
                 dic[i] = pad_sequences(typ, maxlen=fargs.max_len_for_feats.get(i), padding='post', )
 
         return dic, Y_train, test_df
